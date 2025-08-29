@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo de Carreras 2024 - Instituto El Divino Maestro</title>
+    <link rel="icon" type="image/png" href="logo del colegio.png">
+    <link rel="shortcut icon" type="image/png" href="logo del colegio.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +54,22 @@
         .footer-logo {
             max-width: 100px;
             height: auto;
-            filter: brightness(0) invert(1);
+            filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(255,255,255,0.3));
+        }
+        .logo-white-bg {
+            max-width: 100px;
+            height: auto;
+            filter: brightness(1.1) contrast(1.2) drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        .logo-footer {
+            max-width: 120px;
+            height: auto;
+            filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(255,255,255,0.6)) contrast(1.5);
+        }
+        .logo-footer-alt {
+            max-width: 120px;
+            height: auto;
+            filter: brightness(1.2) contrast(1.8) saturate(1.5) drop-shadow(0 3px 6px rgba(255,255,255,0.8));
         }
     </style>
 </head>
@@ -130,7 +147,7 @@
 
         <section class="bg-azul-marino text-white p-8 rounded-lg shadow-lg text-center mt-12">
             <div class="flex justify-center mb-6">
-                <img src="logo del colegio.png" alt="Logo del Instituto" class="w-16 h-16 object-contain footer-logo">
+                <img src="logo del colegio.png" alt="Logo del Instituto" class="logo-white-bg">
             </div>
             <h2 class="text-3xl font-bold text-dorado mb-4">Valor Agregado para Tu Futuro</h2>
             <p class="text-xl mb-6">Todas nuestras carreras incluyen diplomados especializados para potenciar tu perfil profesional.</p>
@@ -151,7 +168,7 @@
     <footer class="bg-azul-marino text-white py-12 px-4 mt-12">
         <div class="container mx-auto text-center">
             <div class="flex justify-center mb-6">
-                <img src="logo del colegio.png" alt="Logo del Instituto El Divino Maestro" class="footer-logo">
+                <img src="logo del colegio.png" alt="Logo del Instituto El Divino Maestro" class="logo-footer-alt">
             </div>
             <h2 class="text-3xl font-bold text-dorado mb-8">Contáctanos</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
