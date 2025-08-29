@@ -38,11 +38,30 @@
                 height: 350px;
             }
         }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .logo {
+            max-width: 150px;
+            height: auto;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+        .footer-logo {
+            max-width: 100px;
+            height: auto;
+            filter: brightness(0) invert(1);
+        }
     </style>
 </head>
 <body class="text-azul-marino">
 
     <header class="hero-bg text-white text-center py-20 px-4">
+        <div class="logo-container">
+            <img src="logo del colegio.png" alt="Logo del Instituto El Divino Maestro" class="logo">
+        </div>
         <h1 class="text-4xl md:text-6xl font-black uppercase tracking-wider">Instituto Particular Mixto<br><span class="text-dorado">El Divino Maestro</span></h1>
         <p class="text-xl md:text-2xl mt-4 italic">"ID Y ENSEÑAD A TODOS"</p>
         <p class="mt-2 text-lg">TOTAL TOMAS ESTILLA</p>
@@ -53,16 +72,25 @@
 
         <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                <div class="flex justify-center mb-4">
+                    <img src="logo del colegio.png" alt="Logo del Instituto" class="w-16 h-16 object-contain">
+                </div>
                 <h2 class="text-3xl font-bold mb-4">Visión</h2>
                 <p class="text-lg leading-relaxed">Ser una institución educativa líder en el campo de la formación integral de los jóvenes, aplicando metodologías innovadoras, a fin de formar personas competentes para desempeñarse eficientemente y responder a las necesidades de la comunidad y su desarrollo.</p>
             </div>
             <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                <div class="flex justify-center mb-4">
+                    <img src="logo del colegio.png" alt="Logo del Instituto" class="w-16 h-16 object-contain">
+                </div>
                 <h2 class="text-3xl font-bold mb-4">Misión</h2>
                 <p class="text-lg leading-relaxed">Somos una institución educativa, con amplia trayectoria en el campo de la formación de jóvenes, cuya preparación comprende el desarrollo de habilidades científico-humanista, aplicación de metodologías innovadoras, la práctica de sólidos valores morales y éticos y el fortalecimiento del espíritu de servicio.</p>
             </div>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-lg mb-12">
+            <div class="flex justify-center mb-6">
+                <img src="logo del colegio.png" alt="Logo del Instituto" class="w-20 h-20 object-contain">
+            </div>
             <h2 class="text-3xl font-bold text-center mb-8">Información General </h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 <div class="bg-azul-marino text-white p-6 rounded-lg">
@@ -84,6 +112,9 @@
         </section>
         
         <section class="mb-12">
+            <div class="flex justify-center mb-6">
+                <img src="logo del colegio.png" alt="Logo del Instituto" class="w-16 h-16 object-contain">
+            </div>
             <h2 class="text-3xl font-bold text-center mb-4">Nuestras Carreras</h2>
             <p class="text-center text-lg max-w-3xl mx-auto mb-8">Ofrecemos una variedad de programas diseñados para preparar a nuestros estudiantes para los desafíos del futuro, con duraciones que se adaptan a sus necesidades.</p>
             <div class="bg-white p-8 rounded-lg shadow-lg">
@@ -98,6 +129,9 @@
         <div id="carreras-container" class="space-y-12"></div>
 
         <section class="bg-azul-marino text-white p-8 rounded-lg shadow-lg text-center mt-12">
+            <div class="flex justify-center mb-6">
+                <img src="logo del colegio.png" alt="Logo del Instituto" class="w-16 h-16 object-contain footer-logo">
+            </div>
             <h2 class="text-3xl font-bold text-dorado mb-4">Valor Agregado para Tu Futuro</h2>
             <p class="text-xl mb-6">Todas nuestras carreras incluyen diplomados especializados para potenciar tu perfil profesional.</p>
             <div class="flex flex-col md:flex-row justify-center items-center gap-8">
@@ -116,6 +150,9 @@
 
     <footer class="bg-azul-marino text-white py-12 px-4 mt-12">
         <div class="container mx-auto text-center">
+            <div class="flex justify-center mb-6">
+                <img src="logo del colegio.png" alt="Logo del Instituto El Divino Maestro" class="footer-logo">
+            </div>
             <h2 class="text-3xl font-bold text-dorado mb-8">Contáctanos</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div>
