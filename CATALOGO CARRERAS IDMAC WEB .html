@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Carreras 2024 - Instituto El Divino Maestro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .text-azul-marino { color: #002147; }
+        .bg-azul-marino { background-color: #002147; }
+        .text-dorado { color: #FFD700; }
+        .bg-dorado { background-color: #FFD700; }
+        .border-dorado { border-color: #FFD700; }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 33, 71, 0.8), rgba(0, 33, 71, 0.8)), url('https://placehold.co/1920x1080/002147/FFFFFF?text=Instituto+El+Divino+Maestro');
+            background-size: cover;
+            background-position: center;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="text-azul-marino">
+
+    <header class="hero-bg text-white text-center py-20 px-4">
+        <h1 class="text-4xl md:text-6xl font-black uppercase tracking-wider">Instituto Particular Mixto<br><span class="text-dorado">El Divino Maestro</span></h1>
+        <p class="text-xl md:text-2xl mt-4 italic">"ID Y ENSEÑAD A TODOS"</p>
+        <p class="mt-2 text-lg">TOTAL TOMAS ESTILLA</p>
+        <p class="mt-8 text-2xl md:text-3xl font-bold bg-dorado text-azul-marino inline-block px-6 py-3 rounded-lg shadow-lg">Catálogo de Carreras</p>
+    </header>
+
+    <main class="container mx-auto px-4 md:px-8 py-12">
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                <h2 class="text-3xl font-bold mb-4">Visión</h2>
+                <p class="text-lg leading-relaxed">Ser una institución educativa líder en el campo de la formación integral de los jóvenes, aplicando metodologías innovadoras, a fin de formar personas competentes para desempeñarse eficientemente y responder a las necesidades de la comunidad y su desarrollo.</p>
+            </div>
+            <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                <h2 class="text-3xl font-bold mb-4">Misión</h2>
+                <p class="text-lg leading-relaxed">Somos una institución educativa, con amplia trayectoria en el campo de la formación de jóvenes, cuya preparación comprende el desarrollo de habilidades científico-humanista, aplicación de metodologías innovadoras, la práctica de sólidos valores morales y éticos y el fortalecimiento del espíritu de servicio.</p>
+            </div>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-lg mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8">Información General </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="bg-azul-marino text-white p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold text-dorado">Inscripción</h3>
+                    <p class="text-4xl font-black mt-2">Q300.00</p>
+                    <p class="mt-2">Pago único anual</p>
+                </div>
+                <div class="bg-azul-marino text-white p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold text-dorado">Cuota Mensual</h3>
+                    <p class="text-4xl font-black mt-2">Q230.00</p>
+                    <p class="mt-2">10 mensualidades</p>
+                </div>
+                <div class="bg-azul-marino text-white p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold text-dorado">Oferta Académica</h3>
+                    <p class="text-4xl font-black mt-2">7 Carreras</p>
+                    <p class="mt-2">Planes Diario y Fin de Semana</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-4">Nuestras Carreras</h2>
+            <p class="text-center text-lg max-w-3xl mx-auto mb-8">Ofrecemos una variedad de programas diseñados para preparar a nuestros estudiantes para los desafíos del futuro, con duraciones que se adaptan a sus necesidades.</p>
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-bold text-center mb-4">Duración de las Carreras</h3>
+                <div class="chart-container h-80 md:h-96">
+                    <canvas id="duracionCarrerasChart"></canvas>
+                </div>
+                <p class="text-center mt-4">Este gráfico muestra la distribución de nuestras carreras según su duración en años, ayudándote a visualizar el compromiso de tiempo para cada tipo de programa.</p>
+            </div>
+        </section>
+        
+        <div id="carreras-container" class="space-y-12"></div>
+
+        <section class="bg-azul-marino text-white p-8 rounded-lg shadow-lg text-center mt-12">
+            <h2 class="text-3xl font-bold text-dorado mb-4">Valor Agregado para Tu Futuro</h2>
+            <p class="text-xl mb-6">Todas nuestras carreras incluyen diplomados especializados para potenciar tu perfil profesional.</p>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+                <div class="bg-white text-azul-marino p-6 rounded-lg shadow-md w-full md:w-1/3">
+                    <h3 class="text-2xl font-bold">Diplomado en Computación</h3>
+                    <p class="mt-2">Adquiere habilidades tecnológicas esenciales para el mercado laboral actual.</p>
+                </div>
+                <div class="bg-white text-azul-marino p-6 rounded-lg shadow-md w-full md:w-1/3">
+                    <h3 class="text-2xl font-bold">Diplomado en Recursos Humanos</h3>
+                    <p class="mt-2">Desarrolla competencias en gestión de talento y relaciones interpersonales.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-azul-marino text-white py-12 px-4 mt-12">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold text-dorado mb-8">Contáctanos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-2">Teléfonos</h3>
+                    <p>7948-4009</p>
+                    <p>7948-3091</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2">WhatsApp</h3>
+                    <p>3202-3812</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2">Correos Electrónicos</h3>
+                    <p>divinomaestro2008@hotmail.es</p>
+                    <p>eldivinomaestro89@gmail.com</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2">Página Web</h3>
+                    <p>www.eldivinomaestro.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<script>
+const carreras = [
+    {
+        titulo: "Magisterio de Educación Infantil Intercultural",
+        jornada: "Plan Diario",
+        duracion: "3 años",
+        objetivo: "Brindar la formación académica y humana para ser -Maestra- en la etapa educativa de 0 a 6 años y poder contribuir al desarrollo y crecimiento de los niños, despertando su interés por el mundo que les rodea desde la observación, la exploración y el juego.",
+        grados: [
+            { nombre: "Cuarto Grado", materias: ["Filosofía Maya y General", "Historia de Guatemala y Mesoamérica", "Educación en Población", "Matemática (Maya y Universal)", "Física Fundamental", "Técnicas de Investigación e Investigación Educativa", "Comunicación y Lenguaje Idioma Español L1", "Destrezas de Aprendizaje I", "Educación Bilingüe Intercultural", "Expresión Artística I: danza, teatro y su didáctica", "Psicopedagogía General", "Didáctica General"] },
+            { nombre: "Quinto Grado", materias: ["Historia Universal", "Seminario Sobre Problemas de la Educación", "Biología", "Estadística Aplicada a la Educación", "Comunicación y Lenguaje Idioma Español II (L1)", "Destrezas de Aprendizaje II", "Literatura Maya, Ladina, Xinka y Garifuna", "Expresión Artística II (educación musical y su didáctica)", "Psicopedagogía Infantil", "Didáctica de las Matemáticas", "Planificación y Evaluación", "Didáctica de Educación Física (Psicomotricidad fina)", "Medio Social y Natural I, y su Didáctica", "Gestión Educativa II (Desarrollo Curricular y Comunitario)", "Práctica Docente: Observación y Participación"] },
+            { nombre: "Sexto Grado", materias: ["Realidad Socio-cultural (cultura, identidad y derechos humanos)", "Química", "Informática Aplicada a la Educación", "Didáctica de Idioma Español (L1)", "Comunicación y Lenguaje Idioma Indígena de la Región (L2)", "Literatura Universal", "Expresión Artística III: artes plásticas, artes de las culturas de Guatemala y su didáctica", "Enfoques Pedagógicos (Educación para la Democracia y en Valores)", "Producción de Materiales para el Nivel Infantil", "Medio Social y Natural II, y su Didáctica", "Práctica Docente"] }
+        ]
+    },
+    {
+        titulo: "Secretariado y Oficinista",
+        jornada: "Plan Diario y Fin de Semana",
+        duracion: "2 años",
+        objetivo: "Formar mujeres emprendedoras y eficientes, capaces con cargo de crear un ambiente al equipo de trabajo armonioso que trabaja a dominar técnicas de que ayuden a brindar una mejor atención al público y así adquirir conocimientos contables y de computo.",
+        grados: [
+            { nombre: "Cuarto Grado", materias: ["Redacción y Correspondencia I", "Orto-Caligrafía", "Taquigrafía I", "Mecanografía I", "Matemática Comercial", "Inglés Comercial", "Contabilidad", "Computación I"] },
+            { nombre: "Quinto Grado", materias: ["Redacción y Correspondencia II", "Taquigrafía II", "Mecanografía II", "Administración y Práctica de Oficina", "Estudios Socio Económicos de Guatemala", "Relaciones Públicas y Ética Profesional", "Catalogación y Archivo", "Práctica Supervisada", "Computación II"] }
+        ]
+    },
+    {
+        titulo: "Bachillerato en Ciencias y Letras con Orientación en Computación",
+        jornada: "Plan Diario",
+        duracion: "2 años",
+        objetivo: "Adquirir los conocimientos en el uso de la tecnología y resolución de problemas relacionados con las ciencias, las letras y la vida cotidiana. Aprendiendo a programar computadoras en los lenguajes de programación más utilizados para que puedan desempeñarse muy bien en el área de la informática, adaptadas en distintos contextos de la vida social, laboral, familiar, académica.",
+        grados: [
+            { nombre: "Cuarto Grado", materias: ["Lengua y Literatura 4", "Comunicación y Lenguaje L3 (Inglés Técnico 4)", "Matemática", "Física", "Ciencias Sociales y Formación Ciudadana 4", "Filosofía", "Expresión Artística", "Educación Física", "Computación Aplicada", "Laboratorio I", "Sistemas e Instalación de Software", "Contabilidad General"] },
+            { nombre: "Quinto Grado", materias: ["Lengua y Literatura 5", "Comunicación y Lenguaje L3 (Inglés Técnico 5)", "Matemática 5", "Estadística Descriptiva", "Biología", "Química", "Ciencias Sociales y Formación Ciudadana 5", "Ética Profesional y Relaciones Humanas", "Reparación y Soporte Técnico", "Producción de Contenidos Digitales", "Laboratorio II", "Seminario"] }
+        ]
+    },
+    {
+        titulo: "Bachillerato en Ciencias y Letras por Madurez",
+        jornada: "Plan Fin de Semana",
+        duracion: "1 año",
+        objetivo: "1. Desarrollar un pensamiento lógico, reflexivo, crítico, propositito y creativo en la solución de diversas situaciones y problemas cotidianos. 2. Aplicar métodos de razonamiento, el lenguaje y la simbología matemática en el planteamiento e interpretación de situaciones de su entorno. 3. Aplicar tecnología y saberes de su propia cultura y de otras culturas en proyectos de desarrollo familiar, escolar y comunitario.",
+        grados: [
+            { nombre: "Año Único", materias: ["Comunicación y Lenguaje (Lengua y Literatura, Inglés, TIC)", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales y Formación Ciudadana", "Psicología", "Filosofía", "Expresión Artística", "Educación Física", "Investigación (Seminario)"] }
+        ]
+    },
+    {
+        titulo: "Bachillerato en Computación con Orientación Comercial",
+        jornada: "Plan Fin de Semana",
+        duracion: "2 años",
+        objetivo: "Desarrollar el conocimiento científico y tecnológico con la capacidad para instalar software, proporcionar soporte técnico, producir programas y proyectos en forma digital y organizar sistemas en los diferentes lugares de trabajo.",
+        grados: [
+            { nombre: "Cuarto Grado", materias: ["Matemática I", "Física I", "Computación I", "Programación I", "Idioma Inglés", "Contabilidad I", "Estadística", "Comunicación y Literatura", "Estudios Sociales", "Lógica Matemática"] },
+            { nombre: "Quinto Grado", materias: ["Matemática II", "Programación II", "Programación Comercial", "Contabilidad II", "Inglés Técnico", "Administración", "Problemas Socioeconómicos", "Ética y Relaciones Humanas", "Educación Estética", "Seminario"] }
+        ]
+    },
+    {
+        titulo: "Perito Contador con Orientación en Computación",
+        jornada: "Plan Diario y Fin de Semana",
+        duracion: "3 años",
+        objetivo: "Poseer los conocimientos en el manejo eficiente de la contabilidad, las leyes fiscales y aduanales vigentes en forma interactiva, uso de la tecnología, y resolución de problemas relacionados con operaciones contables.",
+        grados: [
+            { nombre: "Cuarto Grado", materias: ["Contabilidad de Sociedades", "Matemática Comercial", "Fundamentos de Derecho", "Inglés Comercial I", "Redacción y Correspondencia Mercantil", "Introducción a la Economía", "Ortografía y Caligrafía", "Administración y Organización de Oficinas", "Computación I", "Programación I"] },
+            { nombre: "Quinto Grado", materias: ["Contabilidad de Costos", "Cálculo Mercantil y Financiero", "Inglés Comercial II", "Legislación Fiscal y Aduanal", "Finanzas Públicas", "Geografía Económica", "Catalogación y Archivo", "Mecanografía", "Computación II", "Programación II"] },
+            { nombre: "Sexto Grado", materias: ["Contabilidad Bancaria", "Estadística Comercial", "Contabilidad Gubernamental Integrada", "Organización de Empresas", "Ética Profesional y Relaciones Humanas", "Práctica Supervisada", "Auditoria", "Derecho Mercantil y Nociones de Derecho Laboral", "Computación III", "Programación III", "Seminario sobre Problemas Socioeconómicos de Guatemala"] }
+        ]
+    },
+    {
+        titulo: "Perito en Administración",
+        jornada: "Plan Diario",
+        duracion: "3 años",
+        objetivo: "Obtener las herramientas necesarias para poder desenvolverse en cualquier empresa, incluso realizar la tarea de un buen emprendedor. Aplicando sus conocimientos en temas jurídicos, financieros, mercadológicos, expresión corporal y saber manejar en un determinado momento a un grupo de empleados.",
+        grados: [
+            { nombre: "Cuarto Grado", materias: ["Administración Pública", "Matemática", "Introducción a la Economía", "Teoría del Derecho Administrativo", "Organización Administrativa de Gobierno", "Contabilidad General", "Organización y Metodos"] },
+            { nombre: "Quinto Grado", materias: ["Administración Pública II", "Estadística General", "Desarrollo Nacional I", "Legislación Administrativa", "Hacienda Pública y Presupuesto Nacional", "Contabilidad Fiscal y Municipal de Costos", "Teoría y Práctica de Planificación", "Psicología General"] },
+            { nombre: "Sexto Grado", materias: ["Gerencia y Administración de Personal", "Presupuesto Nacional II", "Desarrollo Nacional II", "Sistema de Compras y Suministros", "Seminario sobre problemas de Administración Pública", "Relaciones Públicas, Humanas y Ética Profesional", "Práctica Supervisada"] }
+        ]
+    }
+];
+
+function wrapLabel(str, maxWidth) {
+    if (str.length <= maxWidth) {
+        return str;
+    }
+    const words = str.split(' ');
+    let lines = [];
+    let currentLine = '';
+    words.forEach(word => {
+        if ((currentLine + word).length > maxWidth) {
+            lines.push(currentLine.trim());
+            currentLine = '';
+        }
+        currentLine += word + ' ';
+    });
+    lines.push(currentLine.trim());
+    return lines;
+}
+
+const tooltipTitleCallback = (tooltipItems) => {
+    const item = tooltipItems[0];
+    let label = item.chart.data.labels[item.dataIndex];
+    return Array.isArray(label) ? label.join(' ') : label;
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const carrerasContainer = document.getElementById('carreras-container');
+    
+    carreras.forEach((carrera, index) => {
+        const carreraId = `carreraChart${index}`;
+        const card = document.createElement('div');
+        card.className = 'bg-white p-8 rounded-lg shadow-lg';
+        
+        let gradosHtml = '<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">';
+        carrera.grados.forEach(grado => {
+            gradosHtml += `
+                <div class="bg-gray-50 p-4 rounded">
+                    <h4 class="font-bold text-lg mb-2">${grado.nombre}</h4>
+                    <ul class="list-disc list-inside space-y-1 text-sm">
+                        ${grado.materias.map(materia => `<li>${materia}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        });
+        gradosHtml += '</div>';
+
+        card.innerHTML = `
+            <h3 class="text-2xl font-black text-azul-marino border-b-4 border-dorado pb-2">${carrera.titulo}</h3>
+            <div class="flex flex-wrap gap-4 my-4 text-sm">
+                <span class="bg-azul-marino text-white px-3 py-1 rounded-full font-bold">${carrera.jornada}</span>
+                <span class="bg-dorado text-azul-marino px-3 py-1 rounded-full font-bold">${carrera.duracion}</span>
+            </div>
+            <p class="my-4">${carrera.objetivo}</p>
+            <div class="mt-6">
+                <h4 class="text-xl font-bold text-center mb-2">Materias por Grado</h4>
+                <div class="chart-container h-64">
+                    <canvas id="${carreraId}"></canvas>
+                </div>
+            </div>
+            ${gradosHtml}
+        `;
+        carrerasContainer.appendChild(card);
+    });
+    
+    carreras.forEach((carrera, index) => {
+        const ctx = document.getElementById(`carreraChart${index}`).getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: carrera.grados.map(g => g.nombre),
+                datasets: [{
+                    label: 'Número de Materias',
+                    data: carrera.grados.map(g => g.materias.length),
+                    backgroundColor: ['#003566', '#004e8a', '#0067ac'],
+                    borderColor: '#002147',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 2
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { title: tooltipTitleCallback } }
+                }
+            }
+        });
+    });
+
+    const duraciones = carreras.reduce((acc, carrera) => {
+        const dur = parseInt(carrera.duracion);
+        acc[dur] = (acc[dur] || 0) + 1;
+        return acc;
+    }, {});
+
+    const duracionCtx = document.getElementById('duracionCarrerasChart').getContext('2d');
+    new Chart(duracionCtx, {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(duraciones).map(d => `${d} año(s)`),
+            datasets: [{
+                label: 'Número de Carreras',
+                data: Object.values(duraciones),
+                backgroundColor: ['#002147', '#004e8a', '#007fce'],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' },
+                tooltip: { callbacks: { title: tooltipTitleCallback } }
+            }
+        }
+    });
+});
+</script>
+
+</body>
+</html>
