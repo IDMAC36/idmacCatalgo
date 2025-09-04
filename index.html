@@ -8,6 +8,8 @@
     <link rel="shortcut icon" type="image/png" href="logo del colegio.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
@@ -71,9 +73,91 @@
             height: auto;
             filter: brightness(1.2) contrast(1.8) saturate(1.5) drop-shadow(0 3px 6px rgba(255,255,255,0.8));
         }
+
+        /* Botón de descarga PDF */
+        .pdf-download-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: linear-gradient(135deg, #002147, #004e8a);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 33, 71, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .pdf-download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 33, 71, 0.4);
+            background: linear-gradient(135deg, #004e8a, #007fce);
+        }
+
+        .pdf-download-btn:active {
+            transform: translateY(0);
+        }
+
+        .pdf-download-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Icono de PDF */
+        .pdf-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Loading spinner */
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff40;
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Estilos específicos para PDF */
+        @media print {
+            .pdf-download-btn {
+                display: none !important;
+            }
+        }
+
+        /* Responsive para el botón */
+        @media (max-width: 640px) {
+            .pdf-download-btn {
+                top: 10px;
+                right: 10px;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body class="text-azul-marino">
+    <!-- Botón de descarga PDF -->
+    <button id="downloadPDF" class="pdf-download-btn" title="Descargar catálogo como PDF">
+        <svg class="pdf-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+            <path d="M10,10H8V17H10V15H11.5C12.3,15 13,14.3 13,13.5V11.5C13,10.7 12.3,10 11.5,10H10M10,12H11V14H10V12Z" />
+        </svg>
+        <span id="downloadText">Descargar PDF</span>
+    </button>
 
     <header class="hero-bg text-white text-center py-20 px-4">
         <div class="logo-container">
@@ -124,6 +208,28 @@
                     <h3 class="text-2xl font-bold text-dorado">Oferta Académica</h3>
                     <p class="text-4xl font-black mt-2">7 Carreras</p>
                     <p class="mt-2">Planes Diario y Fin de Semana</p>
+                </div>
+            </div>
+            
+            <!-- Nota importante sobre cuotas preferenciales -->
+            <div class="mt-8 p-6 bg-gradient-to-r from-green-50 to-green-100 border-l-4 border-green-500 rounded-lg shadow-md">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h4 class="text-lg font-bold text-green-800">🎯 Oferta Especial - Cuotas Preferenciales</h4>
+                        <p class="text-green-700 mt-2 text-base">
+                            <strong>¡Asegura tu cuota actual hasta noviembre 2025!</strong><br>
+                            Mantenemos nuestras tarifas preferenciales actuales para todas las inscripciones realizadas hasta noviembre 2025. 
+                            A partir de enero 2026 se aplicarán las nuevas tarifas vigentes.
+                        </p>
+                        <p class="text-green-600 mt-2 text-sm italic">
+                            ⏰ No pierdas esta oportunidad única de garantizar tu educación con las mejores condiciones económicas.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -270,6 +376,174 @@ const carreras = [
     }
 ];
 
+// Funcionalidad de descarga PDF
+async function generatePDF() {
+    const downloadBtn = document.getElementById('downloadPDF');
+    const downloadText = document.getElementById('downloadText');
+    
+    // Cambiar estado del botón
+    downloadBtn.disabled = true;
+    downloadText.innerHTML = '<div class="loading-spinner"></div>';
+    
+    try {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        
+        // Configurar fuente
+        pdf.setFont('helvetica');
+        
+        // Título principal
+        pdf.setFontSize(20);
+        pdf.setTextColor(0, 33, 71); // Color azul marino
+        pdf.text('INSTITUTO PARTICULAR MIXTO', 105, 30, { align: 'center' });
+        pdf.text('"EL DIVINO MAESTRO"', 105, 40, { align: 'center' });
+        
+        pdf.setFontSize(16);
+        pdf.setTextColor(255, 215, 0); // Color dorado
+        pdf.text('CATÁLOGO DE CARRERAS', 105, 55, { align: 'center' });
+        
+        // Información general
+        pdf.setFontSize(12);
+        pdf.setTextColor(0, 0, 0);
+        pdf.text('"ID Y ENSEÑAD A TODOS"', 105, 65, { align: 'center' });
+        pdf.text('TOTAL TOMAS ESTILLA', 105, 75, { align: 'center' });
+        
+        let yPosition = 95;
+        
+        // Información de costos
+        pdf.setFontSize(14);
+        pdf.setTextColor(0, 33, 71);
+        pdf.text('INFORMACIÓN GENERAL', 105, yPosition, { align: 'center' });
+        yPosition += 15;
+        
+        pdf.setFontSize(12);
+        pdf.setTextColor(0, 0, 0);
+        pdf.text('• Inscripción: Q300.00 (Pago único anual)', 20, yPosition);
+        yPosition += 10;
+        pdf.text('• Cuota Mensual: Q230.00 (10 mensualidades)', 20, yPosition);
+        yPosition += 10;
+        pdf.text('• Oferta Académica: 7 Carreras (Planes Diario y Fin de Semana)', 20, yPosition);
+        yPosition += 20;
+        
+        // Carreras
+        for (let i = 0; i < carreras.length; i++) {
+            const carrera = carreras[i];
+            
+            // Verificar si necesitamos nueva página
+            if (yPosition > 250) {
+                pdf.addPage();
+                yPosition = 20;
+            }
+            
+            // Título de carrera
+            pdf.setFontSize(14);
+            pdf.setTextColor(0, 33, 71);
+            const titulo = pdf.splitTextToSize(carrera.titulo, 170);
+            pdf.text(titulo, 20, yPosition);
+            yPosition += titulo.length * 7;
+            
+            // Información básica
+            pdf.setFontSize(10);
+            pdf.setTextColor(100, 100, 100);
+            pdf.text(`Jornada: ${carrera.jornada} | Duración: ${carrera.duracion}`, 20, yPosition);
+            yPosition += 10;
+            
+            // Objetivo
+            pdf.setFontSize(10);
+            pdf.setTextColor(0, 0, 0);
+            const objetivo = pdf.splitTextToSize(`Objetivo: ${carrera.objetivo}`, 170);
+            pdf.text(objetivo, 20, yPosition);
+            yPosition += objetivo.length * 5 + 5;
+            
+            // Materias por grado
+            carrera.grados.forEach(grado => {
+                if (yPosition > 250) {
+                    pdf.addPage();
+                    yPosition = 20;
+                }
+                
+                pdf.setFontSize(11);
+                pdf.setTextColor(0, 33, 71);
+                pdf.text(grado.nombre, 25, yPosition);
+                yPosition += 8;
+                
+                pdf.setFontSize(9);
+                pdf.setTextColor(0, 0, 0);
+                grado.materias.forEach(materia => {
+                    if (yPosition > 280) {
+                        pdf.addPage();
+                        yPosition = 20;
+                    }
+                    pdf.text(`• ${materia}`, 30, yPosition);
+                    yPosition += 5;
+                });
+                yPosition += 3;
+            });
+            
+            yPosition += 10;
+        }
+        
+        // Agregar página de contacto
+        pdf.addPage();
+        yPosition = 30;
+        
+        pdf.setFontSize(16);
+        pdf.setTextColor(0, 33, 71);
+        pdf.text('INFORMACIÓN DE CONTACTO', 105, yPosition, { align: 'center' });
+        yPosition += 20;
+        
+        pdf.setFontSize(12);
+        pdf.setTextColor(0, 0, 0);
+        pdf.text('Teléfonos:', 20, yPosition);
+        yPosition += 8;
+        pdf.text('• 7948-4009', 25, yPosition);
+        yPosition += 8;
+        pdf.text('• 3202-3812', 25, yPosition);
+        yPosition += 15;
+        
+        pdf.text('WhatsApp: 3202-3812', 20, yPosition);
+        yPosition += 15;
+        
+        pdf.text('Correos Electrónicos:', 20, yPosition);
+        yPosition += 8;
+        pdf.text('• divinomaestro2008@hotmail.es', 25, yPosition);
+        yPosition += 8;
+        pdf.text('• eldivinomaestro89@gmail.com', 25, yPosition);
+        yPosition += 15;
+        
+        pdf.text('Página Web:', 20, yPosition);
+        yPosition += 8;
+        pdf.text('• https://idmac36.github.io/landingpage/', 25, yPosition);
+        yPosition += 20;
+        
+        // Diplomados
+        pdf.setFontSize(14);
+        pdf.setTextColor(0, 33, 71);
+        pdf.text('VALOR AGREGADO', 105, yPosition, { align: 'center' });
+        yPosition += 15;
+        
+        pdf.setFontSize(12);
+        pdf.setTextColor(0, 0, 0);
+        pdf.text('Todas nuestras carreras incluyen diplomados especializados:', 20, yPosition);
+        yPosition += 12;
+        pdf.text('• Diplomado en Computación', 25, yPosition);
+        yPosition += 8;
+        pdf.text('• Diplomado en Recursos Humanos', 25, yPosition);
+        
+        // Guardar PDF
+        const fecha = new Date().toLocaleDateString('es-GT').replace(/\//g, '-');
+        pdf.save(`Catalogo_Carreras_El_Divino_Maestro_${fecha}.pdf`);
+        
+    } catch (error) {
+        console.error('Error al generar PDF:', error);
+        alert('Error al generar el PDF. Por favor, inténtalo de nuevo.');
+    } finally {
+        // Restaurar estado del botón
+        downloadBtn.disabled = false;
+        downloadText.innerHTML = 'Descargar PDF';
+    }
+}
+
 function wrapLabel(str, maxWidth) {
     if (str.length <= maxWidth) {
         return str;
@@ -295,6 +569,9 @@ const tooltipTitleCallback = (tooltipItems) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Event listener para el botón de descarga PDF
+    document.getElementById('downloadPDF').addEventListener('click', generatePDF);
+    
     const carrerasContainer = document.getElementById('carreras-container');
     
     carreras.forEach((carrera, index) => {
